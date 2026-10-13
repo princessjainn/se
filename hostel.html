@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hostel Reallocation System</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7f6;
+      color: #263832;
+    }
+
+    header {
+      background: #153c35;
+      color: white;
+      padding: 22px 8%;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    header p {
+      color: #cde0d8;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      flex: 1;
+      box-shadow: 0 2px 8px #0000000d;
+    }
+
+    .stat-card h2 {
+      color: #187653;
+      margin-top: 10px;
+    }
+
+    .panel {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      box-shadow: 0 2px 8px #0000000d;
+    }
+
+    .panel h2 {
+      margin-bottom: 20px;
+      color: #153c35;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    label {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    input, select, textarea {
+      padding: 12px;
+      border: 1px solid #ccd6d1;
+      border-radius: 6px;
+      font-size: 14px;
+      width: 100%;
+      background: white;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    button {
+      background: #187653;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    button:hover {
+      background: #105c3e;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+
+    th, td {
+      padding: 13px;
+      text-align: left;
+      border-bottom: 1px solid #e5ebe7;
+      font-size: 14px;
+    }
+
+    th {
+      background: #edf4f0;
+    }
+
+    .status {
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .pending {
+      background: #fff0ce;
+      color: #8a6000;
+    }
+
+    .approved {
+      background: #d9f5e5;
+      color: #17683b;
+    }
+
+    .rejected {
+      background: #ffe0e0;
+      color: #a32626;
+    }
+
+    .message {
+      margin-top: 15px;
+      color: #187653;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #66756e;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+
+      .stats {
+        flex-direction: column;
+      }
+
+      header {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>HostelEase</h1>
+  <p>Hostel Reallocation Management System</p>
+</header>
+
+<div class="container">
+
+  <div class="stats">
+    <div class="stat-card">
+      <p>Total Applications</p>
+      <h2 id="total">0</h2>
+    </div>
+
+    <div class="stat-card">
+      <p>Pending Requests</p>
+      <h2 id="pending">0</h2>
+    </div>
+  </div>
+
+  <section class="panel">
+    <h2>Apply for Hostel Reallocation</h2>
+
+    <form id="hostelForm">
+      <div class="form-grid">
+
+        <div class="field">
+          <label for="name">Student Name</label>
+          <input id="name" type="text"
+                 placeholder="Enter full name" required>
+        </div>
+
+        <div class="field">
+          <label for="studentId">Student ID</label>
+          <input id="studentId" type="text"
+                 placeholder="Enter student ID" required>
+        </div>
+
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input id="email" type="email"
+                 placeholder="Enter email" required>
+        </div>
+
+        <div class="field">
+          <label for="current">Current Hostel</label>
+          <select id="current" required>
+            <option value="">Select hostel</option>
+            <option>Hostel A</option>
+            <option>Hostel B</option>
+            <option>Hostel C</option>
+            <option>Hostel D</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="room">Current Room Number</label>
+          <input id="room" type="text"
+                 placeholder="e.g. A-204" required>
+        </div>
+
+        <div class="field">
+          <label for="preferred">Preferred Hostel</label>
+          <select id="preferred" required>
+            <option value="">Select preferred hostel</option>
+            <option>Hostel A</option>
+            <option>Hostel B</option>
+            <option>Hostel C</option>
+            <option>Hostel D</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label for="reason">Reason for Reallocation</label>
+          <textarea id="reason"
+            placeholder="Explain why you need reallocation..."
+            required></textarea>
+        </div>
+
+        <div class="field full">
+          <button type="submit">Submit Application</button>
+        </div>
+
+      </div>
+      <p id="message" class="message"></p>
+    </form>
+  </section>
+
+  <section class="panel">
+    <h2>Reallocation Requests</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Student ID</th>
+            <th>Name</th>
+            <th>Current Hostel</th>
+            <th>Preferred Hostel</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="requestList">
+          <tr id="emptyRow">
+            <td colspan="5">No applications submitted yet.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  HostelEase &copy; 2026 | Hostel Reallocation Portal
+</footer>
+
+<script>
+  const form = document.getElementById("hostelForm");
+  const requestList = document.getElementById("requestList");
+  const message = document.getElementById("message");
+
+  let total = 0;
+  let pending = 0;
+
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const studentId =
+      document.getElementById("studentId").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const current = document.getElementById("current").value;
+    const room = document.getElementById("room").value.trim();
+    const preferred = document.getElementById("preferred").value;
+    const reason = document.getElementById("reason").value.trim();
+
+    if (current === preferred) {
+      message.style.color = "#b45309";
+      message.textContent =
+        "Please choose a hostel different from your current hostel.";
+      return;
+    }
+
+    if (!name || !studentId || !email ||
+        !current || !room || !preferred || !reason) {
+      message.style.color = "#b91c1c";
+      message.textContent = "Please complete all fields.";
+      return;
+    }
+
+    const emptyRow = document.getElementById("emptyRow");
+    if (emptyRow) emptyRow.remove();
+
+    const row = document.createElement("tr");
+
+    // Use textContent to display user input safely.
+    const values = [
+      studentId, name, current, preferred
+    ];
+
+    values.forEach(function(value) {
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      row.appendChild(cell);
+    });
+
+    const statusCell = document.createElement("td");
+    const status = document.createElement("span");
+    status.className = "status pending";
+    status.textContent = "Pending";
+    statusCell.appendChild(status);
+    row.appendChild(statusCell);
+
+    requestList.appendChild(row);
+
+    total++;
+    pending++;
+
+    document.getElementById("total").textContent = total;
+    document.getElementById("pending").textContent = pending;
+
+    message.style.color = "#187653";
+    message.textContent =
+      "Application submitted successfully!";
+
+    form.reset();
+  });
+</script>
+
+</body>
+</html>

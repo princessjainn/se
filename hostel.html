@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hostel Reallocation System</title>
+  <title>Hostel Buddy - Reallocation System</title>
 
   <style>
     * {
@@ -15,12 +15,12 @@
     }
 
     body {
-      background: #f4f7f6;
-      color: #263832;
+      background: #f1f5fb;
+      color: #26364a;
     }
 
     header {
-      background: #153c35;
+      background: #173b70;
       color: white;
       padding: 22px 8%;
     }
@@ -30,7 +30,7 @@
     }
 
     header p {
-      color: #cde0d8;
+      color: #d3e3ff;
     }
 
     .container {
@@ -51,10 +51,11 @@
       border-radius: 10px;
       flex: 1;
       box-shadow: 0 2px 8px #0000000d;
+      border-left: 4px solid #3478d4;
     }
 
     .stat-card h2 {
-      color: #187653;
+      color: #2463b4;
       margin-top: 10px;
     }
 
@@ -68,7 +69,7 @@
 
     .panel h2 {
       margin-bottom: 20px;
-      color: #153c35;
+      color: #173b70;
     }
 
     .form-grid {
@@ -90,11 +91,17 @@
 
     input, select, textarea {
       padding: 12px;
-      border: 1px solid #ccd6d1;
+      border: 1px solid #cbd7e8;
       border-radius: 6px;
       font-size: 14px;
       width: 100%;
       background: white;
+      color: #26364a;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid #8bb9f5;
+      border-color: #3478d4;
     }
 
     textarea {
@@ -107,7 +114,7 @@
     }
 
     button {
-      background: #187653;
+      background: #2463b4;
       color: white;
       border: none;
       padding: 12px 20px;
@@ -117,7 +124,7 @@
     }
 
     button:hover {
-      background: #105c3e;
+      background: #173b70;
     }
 
     .table-wrap {
@@ -133,12 +140,13 @@
     th, td {
       padding: 13px;
       text-align: left;
-      border-bottom: 1px solid #e5ebe7;
+      border-bottom: 1px solid #e1e8f2;
       font-size: 14px;
     }
 
     th {
-      background: #edf4f0;
+      background: #eaf1fc;
+      color: #173b70;
     }
 
     .status {
@@ -154,8 +162,8 @@
     }
 
     .approved {
-      background: #d9f5e5;
-      color: #17683b;
+      background: #dbeafe;
+      color: #1d4ed8;
     }
 
     .rejected {
@@ -165,14 +173,14 @@
 
     .message {
       margin-top: 15px;
-      color: #187653;
+      color: #2463b4;
       font-weight: bold;
     }
 
     footer {
       text-align: center;
       padding: 20px;
-      color: #66756e;
+      color: #64748b;
       font-size: 13px;
     }
 
@@ -199,7 +207,7 @@
 <body>
 
 <header>
-  <h1>HostelEase</h1>
+  <h1>Hostel Buddy</h1>
   <p>Hostel Reallocation Management System</p>
 </header>
 
@@ -281,6 +289,7 @@
         </div>
 
       </div>
+
       <p id="message" class="message"></p>
     </form>
   </section>
@@ -299,6 +308,7 @@
             <th>Status</th>
           </tr>
         </thead>
+
         <tbody id="requestList">
           <tr id="emptyRow">
             <td colspan="5">No applications submitted yet.</td>
@@ -311,7 +321,7 @@
 </div>
 
 <footer>
-  HostelEase &copy; 2026 | Hostel Reallocation Portal
+  Hostel Buddy &copy; 2026 | Hostel Reallocation Portal
 </footer>
 
 <script>
@@ -353,10 +363,7 @@
 
     const row = document.createElement("tr");
 
-    // Use textContent to display user input safely.
-    const values = [
-      studentId, name, current, preferred
-    ];
+    const values = [studentId, name, current, preferred];
 
     values.forEach(function(value) {
       const cell = document.createElement("td");
@@ -366,11 +373,12 @@
 
     const statusCell = document.createElement("td");
     const status = document.createElement("span");
+
     status.className = "status pending";
     status.textContent = "Pending";
+
     statusCell.appendChild(status);
     row.appendChild(statusCell);
-
     requestList.appendChild(row);
 
     total++;
@@ -379,9 +387,8 @@
     document.getElementById("total").textContent = total;
     document.getElementById("pending").textContent = pending;
 
-    message.style.color = "#187653";
-    message.textContent =
-      "Application submitted successfully!";
+    message.style.color = "#2463b4";
+    message.textContent = "Application submitted successfully!";
 
     form.reset();
   });
